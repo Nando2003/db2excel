@@ -8,7 +8,7 @@ def parse_requirements(filename:str) -> list:
 setup(
     name='db2excel',
     version='0.1.3',
-    packages=['db2excel'],
+    packages=['db2excel', 'exceptions'],
     license='unlincense',
     description='Extracts data from a db and stores it in sheets in Excel',
     long_description=open('README.md').read(),
