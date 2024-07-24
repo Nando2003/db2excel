@@ -4,7 +4,7 @@ from openpyxl.styles import Font
 from typing import List, Tuple
 import os
 
-from exceptions.invalid_path import InvalidPathException
+from .exceptions.invalid_path import InvalidPathException
 
 class SqliteToExcel:
     def __init__(self, db_path:str, download_path:str, excel_name:str= None, overwrite:bool= False) -> None:
