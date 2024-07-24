@@ -48,13 +48,13 @@ class SqliteToExcel:
     
     def download_path_validate(self) -> None:
         if os.path.isdir(self.download_path) is False:
-            raise InvalidPathException(f'The specified {self.download_path} does not exist')
+            raise InvalidPathException(f'The specified path "{self.download_path}" does not exist')
         
         self.excel_name = self.excel_name + ".xlsx"
         self.download_path = os.path.join(self.download_path, self.excel_name)
         
         if os.path.isfile(self.download_path) is True and not(self.overwrite):
-            raise FileExistsError(f'The specified {self.excel_name} file exists')
+            raise FileExistsError(f'The specified "{self.excel_name}" file name exists')
     
     def list_to_sheet(self, table_name:str, columns:list, data:List[Tuple]) -> None:
         try:
@@ -86,10 +86,3 @@ class SqliteToExcel:
     
     def __str__(self) -> str:
         return f"Creating an Excel file: {self.excel_name}"
-    
-if __name__ == "__main__":
-    SqliteToExcel(
-        db_path='testing/sqlite3.db',
-        download_path='testing',
-        overwrite=True
-    )
