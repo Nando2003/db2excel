@@ -4,7 +4,7 @@ from openpyxl.styles import Font
 from typing import List, Tuple
 import os
 
-# from .exceptions import InvalidPathException
+from db2excel.exceptions.invalid_path import InvalidPathException
 
 class SqliteToExcel:
     def __init__(self, db_path:str, download_path:str, excel_name:str= None, overwrite:bool= False) -> None:
@@ -25,8 +25,8 @@ class SqliteToExcel:
             
             self.list_to_sheet(
                 table_name=table,
-                columns=columns,
-                data=data
+                columns   =columns,
+                data      =data
             )
             
     def connecting_to_db(self) -> create_engine:
@@ -48,8 +48,7 @@ class SqliteToExcel:
     
     def download_path_validate(self) -> None:
         if os.path.isdir(self.download_path) is False:
-            ...
-            # raise InvalidPathException(f'The specified {self.download_path} does not exist')
+            raise InvalidPathException(f'The specified {self.download_path} does not exist')
         
         self.excel_name = self.excel_name + ".xlsx"
         self.download_path = os.path.join(self.download_path, self.excel_name)
