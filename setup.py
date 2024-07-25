@@ -21,7 +21,7 @@ setup(
     author_email='nandofontes30@gmail.com',
     entry_points={
         'console_scripts': [
-            'db2excel=db2excel.lib.scripts.__main__:main',
+            'db2excel=lib.scripts.__main__:main',
         ],
     },
 )
