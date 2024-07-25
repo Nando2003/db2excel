@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def parse_requirements(filename:str) -> list:
     """Reads the requirements.txt file and returns a list of packages."""
@@ -8,7 +8,8 @@ def parse_requirements(filename:str) -> list:
 setup(
     name='db2excel',
     version='0.1.4',
-    packages=['db2excel'],
+    packages=find_packages(),
+    include_package_data=True,
     license='unlincense',
     description='Extracts data from a db and stores it in sheets in Excel',
     long_description=open('README.md').read(),
@@ -16,5 +17,5 @@ setup(
     url='https://github.com/Nando2003/db2excel.git',
     install_requires=parse_requirements('requirements.txt'),
     author='Fernando Fontes',
-    author_email='nandofontes30@gmail.com'
+    author_email='nandofontes30@gmail.com',
 )

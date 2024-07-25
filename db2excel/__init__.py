@@ -1,2 +1,2 @@
 from .sqlite_to_excel import SqliteToExcel
-from .invalid_path_exception import invalid_path_exception
+from .exceptions import InvalidPathException
