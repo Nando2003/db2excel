@@ -19,9 +19,4 @@ setup(
     install_requires=parse_requirements('requirements.txt'),
     author='Fernando Fontes',
     author_email='nandofontes30@gmail.com',
-    entry_points={
-        'console_scripts': [
-            'db2excel=lib.scripts.__main__:main',
-        ],
-    },
 )
