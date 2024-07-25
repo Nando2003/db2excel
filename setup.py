@@ -8,7 +8,8 @@ def parse_requirements(filename:str) -> list:
 setup(
     name='db2excel',
     version='0.2.1',
-    packages=find_packages(),
+    packages=find_packages(where='lib'),
+    package_dir={'' : 'lib'},
     include_package_data=True,
     license='unlincense',
     description='Extracts data from a db and stores it in sheets in Excel',
@@ -20,7 +21,7 @@ setup(
     author_email='nandofontes30@gmail.com',
     entry_points={
         'console_scripts': [
-            'db2excel=db2excel.cli:main',
+            'db2excel=scripts.cli:main',
         ],
     },
 )

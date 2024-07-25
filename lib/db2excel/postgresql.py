@@ -1,4 +1,4 @@
-from .base import DatabaseToExcel
+from ._base import DatabaseToExcel
 from typing import Union
 
 from sqlalchemy.engine.base import Engine

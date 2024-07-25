@@ -1,4 +1,4 @@
-from .base import DatabaseToExcel
+from ._base import DatabaseToExcel
 
 from sqlalchemy.engine.base import Engine
 from sqlalchemy import create_engine
