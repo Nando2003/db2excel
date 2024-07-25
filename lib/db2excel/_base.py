@@ -9,7 +9,7 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font
 
 from .exceptions import InvalidPathException
-from os.path import isdir, isfile, join
+from os.path import abspath, isdir, isfile, join
 
 class DatabaseToExcel(ABC):
     
@@ -41,6 +41,8 @@ class DatabaseToExcel(ABC):
             )
     
     def validate_download_path(self) -> None:
+        self.download_path = abspath(self.download_path)
+        
         if isdir(self.download_path) is False:
             raise InvalidPathException(f'The specified path "{self.download_path}" does not exist')
         
