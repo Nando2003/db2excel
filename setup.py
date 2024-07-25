@@ -7,7 +7,7 @@ def parse_requirements(filename:str) -> list:
 
 setup(
     name='db2excel',
-    version='0.1.4',
+    version='0.2.0',
     packages=find_packages(),
     include_package_data=True,
     license='unlincense',
@@ -18,4 +18,9 @@ setup(
     install_requires=parse_requirements('requirements.txt'),
     author='Fernando Fontes',
     author_email='nandofontes30@gmail.com',
+    entry_points={
+        'console_scripts': [
+            'db2excel=db2excel.cli:main',
+        ],
+    },
 )

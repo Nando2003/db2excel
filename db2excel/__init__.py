@@ -1,2 +1,2 @@
-from .sqlite_to_excel import SqliteToExcel
-from .exceptions import InvalidPathException
+from .sqlite import SqliteToExcel
+from .postgresql import PostgreSQLToExcel
