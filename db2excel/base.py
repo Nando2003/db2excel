@@ -5,9 +5,10 @@ from openpyxl.styles import Font
 from typing import Union, List, Tuple
 import os
 
+from abc import ABC, abstractmethod
 from .exceptions import InvalidPathException
 
-class DatabaseToExcel:
+class DatabaseToExcel(ABC):
     
     def __init__(
         self,
@@ -32,7 +33,7 @@ class DatabaseToExcel:
         self._process()
         
     def _process(self) -> None:
-        self.download_path_validate()
+        self.validate_download_path()
         engine = self.creating_engine()
         tables = self.get_tables_from_db(engine)
         
@@ -46,7 +47,7 @@ class DatabaseToExcel:
                 data       =data
             )
 
-    def download_path_validate(self) -> None:
+    def validate_download_path(self) -> None:
         if not os.path.isdir(self.download_path):
             raise InvalidPathException(f'The specified path "{self.download_path}" does not exist')
         
@@ -56,6 +57,7 @@ class DatabaseToExcel:
         if os.path.isfile(self.download_path) and not self.overwrite:
             raise FileExistsError(f'The specified "{self.excel_name}" file name exists')
 
+    @abstractmethod
     def list_to_sheet(self, table_name:str, columns:List[str], data:List[Tuple]) -> None:
         try:
             workbook = load_workbook(self.download_path)
@@ -78,16 +80,20 @@ class DatabaseToExcel:
         
         workbook.save(self.download_path)
 
+    @abstractmethod
     def creating_engine(self) -> Engine:
         raise NotImplementedError("Subclasses must implement this method")
 
+    @abstractmethod
     def get_tables_from_db(self, engine:Engine) -> List[str]:
         return inspect(engine).get_table_names()
 
+    @abstractmethod
     def get_columns_from_table(self, engine:Engine, table_name:str) -> List[str]:
         columns = inspect(engine).get_columns(table_name)
         return [column['name'] for column in columns]
 
+    @abstractmethod
     def get_data_from_table(self, engine:Engine, columns:List[str], table_name:str) -> List[Tuple]:
         columns_name = ', '.join(f'"{col}"' for col in columns)
         query = text(f'SELECT {columns_name} FROM "{table_name}"')
