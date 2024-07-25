@@ -1,33 +1,35 @@
-from sqlalchemy import create_engine
-from sqlalchemy.engine import URL
-from sqlalchemy.engine.base import Engine
+from .base import DatabaseToExcel
 from typing import Union
 
-from .base import DatabaseToExcel
+from sqlalchemy.engine.base import Engine
+from sqlalchemy.engine.url import URL
+from sqlalchemy import create_engine
 
 class PostgreSQLToExcel(DatabaseToExcel):
-
+    
     def __init__(
         self,
-        database      :str,
-        username      :str,
-        password      :str,
-        host          :str,
-        port          :Union[str, int],
-        download_path :str,
-        excel_name    :str  = None,
-        overwrite     :bool = False
+        database         : str,
+        username         : str,
+        password         : str,
+        host             : str,
+        port             : Union[int, str],
+        download_path    : str,
+        excel_name       : str  = None,
+        overwrite        : bool = False,
     ):
+        self.database = database
+        self.username = username
+        self.password = password
+        self.host     =     host
+        self.port     =     port
+        
         super().__init__(
-            database      = database,
-            username      = username,
-            password      = password,
-            host          = host,
-            port          = port,
             download_path = download_path,
-            excel_name    = excel_name,
-            overwrite     = overwrite
+            excel_name    =    excel_name,
+            overwrite     =     overwrite,
         )
+        
     
     def creating_engine(self) -> Engine:
         db_url = {
@@ -39,3 +41,4 @@ class PostgreSQLToExcel(DatabaseToExcel):
             'port'      : self.port,
         }
         return create_engine(URL.create(**db_url))
+        
