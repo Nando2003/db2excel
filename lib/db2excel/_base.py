@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from typing import List, Tuple
 
 from sqlalchemy.engine.base import Engine
+from sqlalchemy.sql import quoted_name
 from sqlalchemy import inspect, text
 
 from openpyxl import Workbook, load_workbook
@@ -64,7 +65,8 @@ class DatabaseToExcel(ABC):
         return [column['name'] for column in columns]
     
     def get_data_from_table(self, engine:Engine, columns:list, table_name:str) -> List[Tuple]:
-        columns_name = ', '.join(f'"{col}"' for col in columns)
+        columns_name = ', '.join(str(quoted_name(col, True)) for col in columns)
+        table_name = str(quoted_name(table_name, True))
         query = text(f'SELECT {columns_name} FROM "{table_name}"')
         with engine.connect() as connection:
             result = connection.execute(query)
