@@ -11,6 +11,8 @@ from openpyxl.styles import Font
 
 from .exceptions import InvalidPathException
 from os.path import abspath, isdir, isfile, join
+from os import remove
+
 
 class DatabaseToExcel(ABC):
     
@@ -50,8 +52,11 @@ class DatabaseToExcel(ABC):
         self.excel_name = self.excel_name + ".xlsx"
         self.download_path = join(self.download_path, self.excel_name)
         
-        if isfile(self.download_path) is True and not(self.overwrite):
-            raise FileExistsError(f'The specified "{self.excel_name}" file name exists')
+        if isfile(self.download_path):
+            if self.overwrite is True:
+                remove(self.download_path)
+            else:
+                raise FileExistsError(f'The specified "{self.excel_name}" file name exists')
         
     @abstractmethod
     def creating_engine(self) -> Engine:
