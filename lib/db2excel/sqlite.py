@@ -1,7 +1,7 @@
 from ._base import DatabaseToExcel
 
 from sqlalchemy.engine.base import Engine
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 class SqliteToExcel(DatabaseToExcel):
     def __init__(
@@ -21,3 +21,7 @@ class SqliteToExcel(DatabaseToExcel):
         
     def creating_engine(self) -> Engine:
         return create_engine(f'sqlite:///{self.db_path}')
+    
+    def search_all_the_data(self, columns: list, table_name: str) -> str:
+        columns_name = ', '.join(f'"{col}"' for col in columns)
+        return text(f'SELECT {columns_name} FROM "{table_name}"')

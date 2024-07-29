@@ -33,7 +33,8 @@ class DatabaseToExcel(ABC):
         
         for table in tables:
             columns = self.get_columns_from_table(engine, table)
-            data    = self.get_data_from_table(engine, columns, table)
+            query   = self.search_all_the_data(columns, table)
+            data    = self.get_data_from_table(engine, query)
             
             self.list_to_sheet(
                 table_name = table,
@@ -67,16 +68,11 @@ class DatabaseToExcel(ABC):
         columns = inspect(engine).get_columns(table_name)
         return [column['name'] for column in columns]
     
-    def get_data_from_table(self, engine:Engine, columns:list, table_name:str) -> List[Tuple]:
-        dialect = engine.dialect.name
+    @abstractmethod
+    def search_all_the_data(self, columns:list, table_name:str) -> str:
+        pass
     
-        if dialect == 'mysql':
-            columns_name = ', '.join(f'`{col}`' for col in columns)
-            query = text(f'SELECT {columns_name} FROM `{table_name}`')
-        else:
-            columns_name = ', '.join(f'"{col}"' for col in columns)
-            query = text(f'SELECT {columns_name} FROM "{table_name}"')
-            
+    def get_data_from_table(self, engine:Engine, query:str) -> List[Tuple]:
         with engine.connect() as connection:
             result = connection.execute(query)
             return [tuple(data) for data in result]

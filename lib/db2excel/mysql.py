@@ -1,9 +1,9 @@
 from ._base import DatabaseToExcel
 from typing import Union
 
+from sqlalchemy import create_engine, text
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.engine.url import URL
-from sqlalchemy import create_engine
 
 class MySQLToExcel(DatabaseToExcel):
     
@@ -41,4 +41,9 @@ class MySQLToExcel(DatabaseToExcel):
             'port'      : self.port,
         }
         return create_engine(URL.create(**db_url))
+    
+    def search_all_the_data(self, columns: list, table_name: str) -> str:
+        columns_name = ', '.join(f'`{col}`' for col in columns)
+        return text(f'SELECT {columns_name} FROM `{table_name}`')
+        
         
