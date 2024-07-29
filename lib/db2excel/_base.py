@@ -67,7 +67,7 @@ class DatabaseToExcel(ABC):
     def get_data_from_table(self, engine:Engine, columns:list, table_name:str) -> List[Tuple]:
         columns_name = ', '.join(str(quoted_name(col, True)) for col in columns)
         table_name = str(quoted_name(table_name, True))
-        query = text(f'SELECT {columns_name} FROM "{table_name}"')
+        query = text(f'SELECT {columns_name} FROM {table_name}')
         with engine.connect() as connection:
             result = connection.execute(query)
             return [tuple(data) for data in result]
