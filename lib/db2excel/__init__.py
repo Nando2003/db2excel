@@ -4,3 +4,4 @@ from ._base import DatabaseToExcel
 
 from .sqlite     import     SqliteToExcel
 from .postgresql import PostgreSQLToExcel
+from .mysql      import      MySQLToExcel
