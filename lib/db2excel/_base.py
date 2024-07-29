@@ -10,7 +10,7 @@ from openpyxl.styles import Font
 
 from .exceptions import InvalidPathException
 from os.path import abspath, isdir, isfile, join
-from os import remove
+from os import remove, getcwd
 
 class DatabaseToExcel(ABC):
     
@@ -43,6 +43,9 @@ class DatabaseToExcel(ABC):
             )
     
     def validate_download_path(self) -> None:
+        if not self.download_path:
+            self.download_path = getcwd()
+            
         self.download_path = abspath(self.download_path)
         
         if isdir(self.download_path) is False:

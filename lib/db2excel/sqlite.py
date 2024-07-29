@@ -7,7 +7,7 @@ class SqliteToExcel(DatabaseToExcel):
     def __init__(
         self, 
         db_path:str, 
-        download_path:str, 
+        download_path:str= None, 
         excel_name:str= None, 
         overwrite:bool= False
     ):

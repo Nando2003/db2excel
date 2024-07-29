@@ -14,7 +14,7 @@ class MySQLToExcel(DatabaseToExcel):
         password         : str,
         host             : str,
         port             : Union[int, str],
-        download_path    : str,
+        download_path    : str  = None,
         excel_name       : str  = None,
         overwrite        : bool = False,
     ):
